@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.nnxy.student.mapper.StudentMapper">
+
+
+    <resultMap id="baseMap" type="cn.nnxy.student.entity.Student">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="stuid" property="stuid"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="birthday" property="birthday"/>
+        <result column="major" property="major"/>
+    </resultMap>
+
+
+
+
+    <select id="getStuById" resultMap="baseMap">
+        SELECT id, name, gender,stuid, phone , email ,birthday , major
+        FROM student
+        WHERE id = #{studentId}
+    </select>
+
+    <update id="updateStu" parameterType="cn.nnxy.student.entity.Student">
+        UPDATE student
+        SET name = #{name},
+            stuid = #{stuid}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteStuById" parameterType="java.lang.Integer">
+        delete from student
+      where id = #{studentId}
+    </delete>
+
+    <insert id="addStu" parameterType="cn.nnxy.student.entity.Student">
+        insert into student (id , name , gender , stuid ,phone, email ,birthday , major)
+        values (#{id} , #{name} , #{gender} , #{stuid} ,{phone},{email},{birthday},{major})
+    </insert>
+
+</mapper>

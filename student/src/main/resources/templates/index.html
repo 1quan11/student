@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>学生信息表</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+</head>
+<body>
+<table class="layui-hide" id="userTable" lay-filter="userTable"></table>
+<div style="display:none;" id="userToolBar">
+    <button type="button" class="layui-btn layui-btn-sm">增加</button>
+    <button type="button" class="layui-btn layui-btn-sm ">编辑</button>
+    <button type="button" class="layui-btn layui-btn-sm">删除</button>
+</div>
+<div id="userBar" style="display:none;">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</div>
+<script th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript">
+    layui.use(['table','form'],function () {
+        var table = layui.table;
+        var $=layui.jquery;
+        var form=layui.form;
+        var layer=layui.layer;
+        //渲染数据表格
+        table.render({
+            elem: '#userTable'     //渲染的目标对象
+            ,url:'/student/studentinfoQueryPage'     //数据接口
+            ,title: '学生信息表'     //数据导出时的标题
+            /* ,toolbar:"<div>hsy</div>" */
+            ,toolbar:"#userToolBar"    //表头工具条
+            ,defaultToolbar:['filter', 'print', 'exports']
+            /*  ,width:500 */
+            /*  ,height:300 */       /* 容器的宽高，自己试一试 */
+            /*  ,height:'full-300' */
+            //,cellMinWidth:100  //设置 列的最小的默认宽度
+            ,done:function(res,curr,count){
+                /* alert(res);//后台url返回的json字符串
+                alert(curr);//当前页
+                alert(count);//数据总条数 */
+            }
+            ,totalRow:true//开启合并行
+            /*   ,limit:20
+              ,limits:[20,40,60] */
+            ,page: true           //是否启用分页
+            ,cols: [
+                [
+                    {field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true, totalRowText: '合计行'}
+                    ,{field:'name', title:'姓名', width:120, edit: 'text'}
+                    ,{field:'gender', title:'性别', width:150, edit: 'text'}
+                    ,{field:'stuid', title:'学号', width:100, sort: true, totalRow: true}
+                    ,{field:'phone', title:'电话', width:80, edit: 'text', sort: true}
+                    ,{field:'email', title:'邮箱', width:100, sort: true, totalRow: true}
+                    ,{field:'birthday', title:'出生日期',width: 100}
+                    ,{field:'major', title:'专业', width:100}
+                    , {fixed: 'right', title:'操作', toolbar: '#userBar', width:150}
+                ]
+            ]
+
+        })
+    });
+</script>
+</body>
+</html>
